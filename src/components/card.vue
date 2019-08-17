@@ -1,10 +1,12 @@
 <template>
-    <div class="card" >
-        <div class="img" :style="[comic.thumbnail ? {'background-image': `url(${comic.thumbnail})`} : {'background': '#FFF'}]"></div>
-        <div class="card-overlay">
-            <span class="title">{{comic.title}}</span>
+    <router-link :to="`/comics/${comic.id}`">
+        <div class="card" >
+            <div class="img" :style="[comic.thumbnail ? {'background-image': `url(${comic.thumbnail})`} : {'background': '#FFF'}]"></div>
+            <div class="card-overlay">
+                <span class="title">{{comic.title}}</span>
+            </div>
         </div>
-    </div>
+    </router-link>
 </template>
 
 <script> 
@@ -34,8 +36,6 @@
         background-repeat: no-repeat;
         background-size: cover;
         height: 100%;
-        transform: scale(1);
-        transition-duration: .5s;
     }
     .card-overlay {
         opacity: 0;
