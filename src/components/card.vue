@@ -30,7 +30,7 @@
         position: relative;
     }
     .img {
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, .4);
         background-position-x: center;
         background-position-y: center;
         background-repeat: no-repeat;

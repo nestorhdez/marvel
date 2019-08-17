@@ -4,7 +4,6 @@
       <h2>{{error ? 'Sorry, something wrong happend.' : 'Loading...'}}</h2>
     </div>
     <div class="img" :style="[comic.thumbnail ? {'background-image': `url(${comic.thumbnail})`} : {'background': '#FFF'}]">
-
     </div>
     <div class="text">
       <h1>{{comic.title}}</h1>
@@ -95,7 +94,7 @@ export default {
     padding: 50px;
   }
   .img {
-        background-color: transparent;
+        background-color: rgba(0, 0, 0, .4);
         background-position-x: center;
         background-position-y: center;
         background-repeat: no-repeat;
