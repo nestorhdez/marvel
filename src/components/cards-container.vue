@@ -1,6 +1,6 @@
 <template>
   <div id="cards-container" :class="{'no-scroll' : states.loading}">
-    <Message :states="states" :styles="{height: 'calc(100vh - 120px)', top: '40px'}"/>
+    <Message :states="states" :styles="{height: 'calc(100vh - 180px)', top: '100px'}"/>
     <Card :comic="comic" v-for="(comic, i) in comics" :key="`c-${i}`"/>
   </div>
 </template>
