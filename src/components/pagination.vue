@@ -29,6 +29,7 @@ export default {
     watch: {
         total() {
             this.pages.totalPages = Math.ceil(this.total / this.limit);
+            this.pages.set = [];
             this.changeSet();
         }
     },

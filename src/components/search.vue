@@ -1,7 +1,7 @@
 <template>
     <div id="search-container">
-      <input id="search-input" type="text" placeholder="Search any comic, character...">
-      <button id="search-btn">Search</button>
+      <input @keyup.enter="$emit('search', input)" v-model="input" id="search-input" type="text" placeholder="Search a comic...">
+      <button @click="$emit('search', input)" id="search-btn">Search</button>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
     name: 'search-container',
     data() {
        return {
-           
+           input: ''
        } 
     }
 }

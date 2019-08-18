@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Search />
+    <Search @search="setUrl" />
     <CardsContainer :url="urlToUse" @total="setTotal"/>
     <Pagination @page="setPage" :limit="5" :total="totalResult"/>
   </div>
@@ -19,8 +19,10 @@ export default {
         total: 0,
         currentPage: 1
       },
-      urlBase: 'http://gateway.marvel.com/v1/public/comics?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9&limit=10',
-      urlBase2: 'http://gateway.marvel.com/v1/public/comics?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9&offset=0&limit=10&orderBy=-modified&titleStartsWith=marvel super action'
+      url: {
+        urlBase: 'http://gateway.marvel.com/v1/public/comics?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9&limit=10',
+        search: '' 
+      }
     }
   },
   components: {
@@ -30,7 +32,7 @@ export default {
   },
   computed:{
     urlToUse() {
-     return `${this.urlBase}&offset=${this.pages.currentPage * 10}`;
+     return `${this.url.urlBase}&offset=${this.pages.currentPage * 10}${this.url.search != '' ? `&titleStartsWith=${this.url.search}` : ''}`;
     },
     totalResult() {
       return this.pages.total;
@@ -42,6 +44,9 @@ export default {
     },
     setPage(page) {
       this.pages.currentPage = page;
+    },
+    setUrl(search) {
+      this.url.search = search;
     }
   }
 }

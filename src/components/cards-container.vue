@@ -1,7 +1,7 @@
 <template>
   <div id="cards-container" :class="{'no-scroll' : loading}">
-    <div v-if="loading || error" id="loading">
-      <h2>{{error ? 'Sorry, something wrong happend.' : 'Loading...'}}</h2>
+    <div v-if="loading || error || noResult" id="loading">
+      <h2>{{showMessage()}}</h2>
     </div>
     <Card :comic="comic" v-for="(comic, i) in comics" :key="`c-${i}`"/>
   </div>
@@ -17,7 +17,8 @@ export default {
     return {
       comics: [],
       loading: false,
-      error: false
+      error: false,
+      noResult: false
     }
   },
   props: {
@@ -29,6 +30,12 @@ export default {
   watch: {
     url(){
       this.getComics();
+    },
+    comics: {
+      handler() {
+        this.comics.length == 0 ? this.noResult = true : this.noResult = false;
+      },
+      deep: true
     }
   },
   methods: {
@@ -53,6 +60,15 @@ export default {
           this.error = true;
           console.log({err});
         });
+    },
+    showMessage() {
+      if(this.error){
+        return 'Sorry, something wrong happend.';
+      }else if(this.loading){
+        return 'Loading...'
+      }else if(this.noResult){
+        return 'Sorry, we didn\'t find it. Try another search.'
+      }
     }
   },
   created() {
