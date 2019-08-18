@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <h1>Marvel Comics</h1>
     <Search @search="setUrl" />
     <CardsContainer :url="urlToUse" @total="setTotal"/>
     <Pagination @page="setPage" :limit="5" :total="totalResult"/>
@@ -54,5 +55,8 @@ export default {
 <style scoped>
   .home {
     position: relative;
+  }
+  h1 {
+    margin-top: 30px;
   }
 </style>
