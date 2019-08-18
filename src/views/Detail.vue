@@ -1,30 +1,14 @@
 <template>
   <div id="detail">
-    <div v-if="loading || error" id="loading">
-      <h2>{{error ? 'Sorry, something wrong happend.' : 'Loading...'}}</h2>
-    </div>
+    <Message :states="states"/>
     <div class="img" :style="[comic.thumbnail ? {'background-image': `url(${comic.thumbnail})`} : {'background': '#FFF'}]">
     </div>
     <div class="text">
       <h1>{{comic.title}}</h1>
       <p>{{comic.description}}</p>
       <div id="lists">
-        <div v-if="comic.characters.length > 0">
-          <h2>Creators</h2>
-          <ul>
-            <li :key="i" v-for="(creator, i) in comic.creators">
-              {{creator}}
-            </li>
-          </ul>
-        </div>
-        <div v-if="comic.characters.length > 0">
-          <h2>Characters</h2>
-          <ul>
-            <li :key="i" v-for="(char, i) in comic.characters">
-              {{char}}
-            </li>
-          </ul>
-        </div>
+        <List :array="comic.creators" :title="'Creators'"/>
+        <List :array="comic.characters" :title="'Characters'"/>
       </div>
     </div>
   </div>
@@ -32,13 +16,21 @@
 
 <script>
 import axios from 'axios'
+import Message from '../components/message'
+import List from '../components/list'
 
 export default {
   name: 'detail',
+  components:{
+    Message,
+    List
+  },
   data() {
     return {
-      loading: true,
-      error: false,
+      states: {
+        loading: true,
+        error: false,
+      },
       comic: {
         id: this.$route.params.id
       },
@@ -54,7 +46,8 @@ export default {
   },
   methods: {
     loadById() {
-      this.loading = true;
+      this.states.error = false;
+      this.states.loading = true;
       axios.get(this.urlToUse)
         .then(res => {
           let comic = res.data.data.results[0]
@@ -66,11 +59,11 @@ export default {
               creators: comic.creators.items.filter((val, i) => i < 4).map(val => val.name),
               characters: comic.characters.items.filter((val, i) => i < 4).map(val => val.name)
             }
-            this.loading = false;
+            this.states.loading = false;
         })
         .catch(err => {
-          this.loading = false;
-          this.error = true;
+          this.states.loading = false;
+          this.states.error = true;
           console.log(err);
         })
     }
