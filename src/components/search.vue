@@ -20,7 +20,7 @@ export default {
   margin: 20px 0;
 }
 #search-input {
-  width: 60%;
+  width: 370px;
   height: 30px;
   margin-right: 15px;
   padding: 0 15px;
@@ -28,7 +28,7 @@ export default {
   border: 1px solid #d7d5d5;
 }
 #search-btn {
-  width: 10%;
+  width: 90px;
   height: 30px;
   border-radius: 10px;
   border-color: #d7d5d5;

@@ -22,5 +22,8 @@ export default {
 </script>
 
 <style scoped>
-
+    #order {
+        width: 120px;
+        height: 20px;
+    }
 </style>
