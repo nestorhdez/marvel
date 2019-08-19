@@ -17,7 +17,7 @@ export default {
 </script>
 <style scoped>
 #search-container {
-  padding: 20px 0;
+  margin: 20px 0;
 }
 #search-input {
   width: 60%;

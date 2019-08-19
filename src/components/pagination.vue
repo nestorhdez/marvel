@@ -1,11 +1,11 @@
 <template>
     <div id="pages-container">
         <ul>
-            <button class="prev" v-if="pages.totalPages > limit" @click="changeSet">prev</button>
+            <button v-if="checkPrevBtn()" @click="prevSet">prev</button>
             <li :class="{'selected': pages.current == i}" :key="`pag-${i}`" v-for="(pag, i) in pages.set">
                 <button :id="i" @click="sendCurrentPage">{{pag}}</button>
             </li>
-            <button class="next" v-if="pages.totalPages > limit" @click="changeSet">next</button>
+            <button v-if="checkNextBtn()" @click="nextSet">next</button>
         </ul>
     </div>
 </template>
@@ -15,7 +15,10 @@ export default {
     name: 'pagination',
     props: {
         total: Number,
-        limit: Number
+        limitOfSet: Number,
+        limitOfPage: Number
+        
+
     },
     data(){
         return {
@@ -28,9 +31,9 @@ export default {
     },
     watch: {
         total() {
-            this.pages.totalPages = Math.ceil(this.total / this.limit);
+            this.pages.totalPages = Math.floor(this.total / this.limitOfPage);
             this.pages.set = [];
-            this.changeSet();
+            this.initSet();
         }
     },
     methods: {
@@ -38,24 +41,42 @@ export default {
             this.pages.current = +e.target.id;
             this.$emit('page', e.target.innerText)
         },
-        changeSet(e) {
-            if(this.pages.set.length == 0){
-                for(let i = 1; i <= this.limit; i++) {
-                    if(i <= this.pages.totalPages){
-                        this.pages.set.push(i)
-                    }else{
-                        break;
-                    } 
+        sendFirstPage() {
+            this.pages.current = 0;
+            this.$emit('page', this.pages.set[0]);
+        },
+        initSet(){
+            for(let i = 1; i <= this.limitOfSet; i++) {
+                if(i <= this.pages.totalPages){
+                    this.pages.set.push(i)
+                }else{
+                    break;
                 }
-            }else if(e.target.innerText == 'prev' && this.pages.set[0] > 1) {
-                this.pages.set = this.pages.set.map(pag => pag - 5)
-                this.pages.current = 0;
-                this.$emit('page', this.pages.set[0])
-            }else if(e.target.innerText == 'next'){
-                this.pages.set = this.pages.set.filter(val => val + 5 <= this.pages.totalPages).map(val => val + 5)
-                this.pages.current = 0;
-                this.$emit('page', this.pages.set[0])
             }
+        },
+        prevSet() {
+            if(this.pages.set.length < this.limitOfSet){
+                this.pages.set = this.pages.set.map(pag => pag - this.limitOfSet);
+                let lastPage = this.pages.set.slice(-1)[0]
+                for(let i = ++lastPage; this.pages.set.length < this.limitOfSet; ++i ){
+                    this.pages.set.push(i);
+                }
+            }else if(this.pages.set[0] > 1) {
+                this.pages.set = this.pages.set.map(pag => pag - this.limitOfSet)
+            }
+            this.sendFirstPage();
+        },
+        nextSet() {
+            this.pages.set = this.pages.set.filter(val => val + this.limitOfSet <= this.pages.totalPages).map(val => val + this.limitOfSet)
+            this.sendFirstPage();
+        },
+        checkPrevBtn() {
+            let firstPage = this.pages.set.slice(0)[0];
+            return firstPage != 1 && this.pages.set.length > 0 ? true : false
+        },
+        checkNextBtn() {
+            let lastPage = this.pages.set.slice(-1)[0];
+            return lastPage < this.pages.totalPages && this.pages.set.length > 0 ? true : false
         }
     }
 }
@@ -92,11 +113,5 @@ export default {
         background: none;
         cursor: pointer;
         padding: 10px;
-    }
-    .prev {
-        margin-right: auto;
-    }
-    .next {
-        margin-left: auto;
     }
 </style>
