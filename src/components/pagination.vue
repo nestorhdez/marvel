@@ -17,8 +17,6 @@ export default {
         total: Number,
         limitOfSet: Number,
         limitOfPage: Number
-        
-
     },
     data(){
         return {

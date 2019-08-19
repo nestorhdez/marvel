@@ -83,7 +83,7 @@ export default {
     margin: 0 auto 20px;
   }
   .no-scroll {
-    height: calc(100vh - 90px);
+    height: calc(100vh - 186px);
     overflow: hidden;
   }
 </style>
