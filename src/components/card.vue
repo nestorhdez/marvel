@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="`/comics/${comic.id}`">
+    <router-link :to="`/${comic.id}`">
         <div class="card" >
             <div class="img" :style="[comic.thumbnail ? {'background-image': `url(${comic.thumbnail})`} : {'background': '#FFF'}]"></div>
             <div class="card-overlay">
