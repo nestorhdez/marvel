@@ -61,7 +61,6 @@ export default {
         .catch(err => {
           this.states.loading = false;
           this.states.error = true;
-          console.log({err});
         });
     }
   },

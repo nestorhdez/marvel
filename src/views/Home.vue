@@ -26,7 +26,7 @@ export default {
         currentPage: 1
       },
       url: {
-        urlBase: 'http://gateway.marvel.com/v1/public/comics?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9&limit=10',
+        urlBase: 'https://gateway.marvel.com/v1/public/comics?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9&limit=10',
         search: '',
         order: ''
       },

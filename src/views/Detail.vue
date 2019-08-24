@@ -34,7 +34,7 @@ export default {
       comic: {
         id: this.$route.params.id
       },
-      url: 'http://gateway.marvel.com/v1/public/comics/',
+      url: 'https://gateway.marvel.com/v1/public/comics/',
       params: '?apikey=bc779a912046b02fea1f9082447b3ade&hash=5706817dfb3ffd7294a5f3702923d497&ts=9'
     }
   },
@@ -64,7 +64,6 @@ export default {
         .catch(err => {
           this.states.loading = false;
           this.states.error = true;
-          console.log(err);
         })
     }
   },
